@@ -22,14 +22,23 @@ Or install it yourself as:
 ## Usage
 
 Add the following line to your base Connection
-
 ```ruby
   glue_devise
-  identified_by :current_user
+```
 
-  def connect
-    authenticate_user!
+The file should look like this
+
+```ruby
+module ApplicationCable
+  class Connection < ActionCable::Connection::Base
+    glue_devise
+    identified_by :current_user
+
+    def connect
+      authenticate_user!
+    end
   end
+end
 ```
 
 ## Contributing
