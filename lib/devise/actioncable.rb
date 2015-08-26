@@ -1,7 +1,6 @@
 require "devise/actioncable/version"
 
-module Devise
-  module Actioncable
+class ActionCable::Connection::Base
     def self.glue_devise
 class_eval <<-METHODS, __FILE__, __LINE__ + 1
     def self.helper_method *ignore
@@ -25,5 +24,4 @@ class_eval <<-METHODS, __FILE__, __LINE__ + 1
     end
 METHODS
     end
-  end
 end
