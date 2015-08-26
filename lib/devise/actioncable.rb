@@ -1,10 +1,13 @@
 require "devise/actioncable/version"
+require "action_cable/connection/base"
 
-class ActionCable::Connection::Base
+ActionCable::Connection::Base.class_eval do
     def self.glue_devise
 class_eval <<-METHODS, __FILE__, __LINE__ + 1
     def self.helper_method *ignore
     end
+
+    include Devise::Controllers::Helpers
 
     def warden
       @request.env['warden'] ||= begin
@@ -15,10 +18,6 @@ class_eval <<-METHODS, __FILE__, __LINE__ + 1
       end
     end
 
-    include Devise::Controllers::Helpers
-
-
-    # I'm so hardcore
     def self.identified_by(*identifiers)
       self.identifiers += identifiers
     end
